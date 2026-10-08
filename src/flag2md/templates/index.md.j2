@@ -1,0 +1,17 @@
+{{ front_matter }}# {{ ctf.name }}
+
+| {{ L.date }} | {{ L.team }} | {{ L.solved }} | {{ L.points }} |
+| --- | --- | --- | --- |
+| {{ dates }} | {{ (ctf.team or "-") | cell }} | {{ solved }}/{{ total }} | {{ points }} |
+{% if ctf.url %}
+
+<{{ ctf.url }}>
+{% endif %}
+{% for group in groups %}
+
+## {{ group.category }}
+
+{% for c in group.challenges %}
+- [{{ "x" if c.solved else " " }}] [{{ c.name }}]({{ c.link }}){{ " (%s pts)" | format(c.points) if c.points is not none else "" }}
+{% endfor %}
+{% endfor %}

@@ -1,0 +1,27 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "flag2md"
+version = "0.1.0"
+description = "Turn CTF solving sessions into clean Markdown write-ups"
+requires-python = ">=3.10"
+dependencies = [
+    "typer>=0.12",
+    "jinja2>=3.1",
+    "pyyaml>=6.0",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[project.scripts]
+flag2md = "flag2md.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/flag2md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

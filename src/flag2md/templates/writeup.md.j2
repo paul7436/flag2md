@@ -1,0 +1,53 @@
+{{ front_matter }}# {{ chal.name }}
+
+| {{ L.ctf }} | {{ L.category }} | {{ L.points }} | {{ L.solves }} | {{ L.author }} |
+| --- | --- | --- | --- | --- |
+| {{ (ctf.name if ctf else "-") | cell }} | {{ chal.category | cell }} | {{ chal.points if chal.points is not none else "-" }} | {{ chal.solves if chal.solves is not none else "-" }} | {{ (chal.author or "-") | cell }} |
+{% if chal.tags %}
+
+**{{ L.tags }}:** {{ chal.tags | map("code") | join(" ") }}
+{% endif %}
+{% if chal.description %}
+
+## {{ L.description }}
+
+{{ chal.description | quote_block }}
+{% endif %}
+{% if files %}
+
+## {{ L.files }}
+
+| {{ L.file }} | {{ L.size }} | SHA256 |
+| --- | --- | --- |
+{% for f in files %}
+| {% if f.link %}[{{ f.name | cell }}]({{ f.link }}){% else %}{{ f.name | cell }}{% endif %} | {{ f.size | human_size }} | {{ f.sha256 | code if f.sha256 else "-" }} |
+{% endfor %}
+{% endif %}
+{% if chal.connection_info %}
+
+## {{ L.connection }}
+
+```text
+{{ chal.connection_info }}
+```
+{% endif %}
+{% if chal.hints %}
+
+## {{ L.hints }}
+
+{% for hint in chal.hints %}
+- {{ hint | indent(2) }}
+{% endfor %}
+{% endif %}
+
+## {{ L.solution }}
+
+{{ notes or "_TODO_" }}
+{% if chal.flag %}
+
+## {{ L.flag }}
+
+```text
+{{ chal.flag }}
+```
+{% endif %}
